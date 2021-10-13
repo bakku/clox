@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "common.h"
+#include "compiler.h"
 #include "debug.h"
 #include "vm.h"
 
@@ -110,9 +111,8 @@ static InterpretResult run(VM* vm) {
     }
 }
 
-InterpretResult interpret(VM* vm, Chunk* chunk) {
-    vm->chunk = chunk;
-    vm->ip = vm->chunk->code;
-    return run(vm);
+InterpretResult interpret(VM* vm, const char* source) {
+    compile(source);
+    return INTERPRET_OK;
 }
 
