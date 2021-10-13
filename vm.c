@@ -35,6 +35,34 @@ static Value readConstant(VM* vm) {
     return vm->chunk->constants.values[readByte(vm)];
 }
 
+static void plus_op(VM* vm) {
+    Value b = pop(vm);
+    Value a = pop(vm);
+
+    push(vm, a + b);
+}
+
+static void subtract_op(VM* vm) {
+    Value b = pop(vm);
+    Value a = pop(vm);
+
+    push(vm, a - b);
+}
+
+static void multiply_op(VM* vm) {
+    Value b = pop(vm);
+    Value a = pop(vm);
+
+    push(vm, a * b);
+}
+
+static void divide_op(VM* vm) {
+    Value b = pop(vm);
+    Value a = pop(vm);
+
+    push(vm, a / b);
+}
+
 static InterpretResult run(VM* vm) {
     for(;;) {
 #ifdef DEBUG_TRACE_EXECUTION
@@ -59,6 +87,18 @@ static InterpretResult run(VM* vm) {
             push(vm, constant);
             break;
         }
+        case OP_ADD:
+            plus_op(vm);
+            break;
+        case OP_SUBTRACT:
+            subtract_op(vm);
+            break;
+        case OP_MULTIPLY:
+            multiply_op(vm);
+            break;
+        case OP_DIVIDE:
+            divide_op(vm);
+            break;
         case OP_NEGATE:
             push(vm, -pop(vm));
             break;

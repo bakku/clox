@@ -14,13 +14,27 @@ int main(int argc, const char* argv[]) {
 
     initChunk(&chunk);
 
-    int constant = addConstant(&chunk, 1.2);
+    int constant = addConstant(&chunk, 4);
+    writeChunk(&chunk, OP_CONSTANT, 1);
+    writeChunk(&chunk, constant, 1);
+
+    constant = addConstant(&chunk, 3);
+    writeChunk(&chunk, OP_CONSTANT, 1);
+    writeChunk(&chunk, constant, 1);
+
+    constant = addConstant(&chunk, 2);
     writeChunk(&chunk, OP_CONSTANT, 1);
     writeChunk(&chunk, constant, 1);
 
     writeChunk(&chunk, OP_NEGATE, 1);
 
-    writeChunk(&chunk, OP_RETURN, 3);
+    writeChunk(&chunk, OP_MULTIPLY, 1);
+
+    writeChunk(&chunk, OP_NEGATE, 1);
+
+    writeChunk(&chunk, OP_ADD, 1);
+
+    writeChunk(&chunk, OP_RETURN, 1);
 
     interpret(&vm, &chunk);
     
